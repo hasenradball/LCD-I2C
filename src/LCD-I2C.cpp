@@ -243,7 +243,7 @@ void LCD_I2C::createChar(uint8_t memory_location, uint8_t charmap[]) {
     _output.rs = 0;
     _output.rw = 0;
 
-    location %= 8;
+    memory_location %= 8;
 
     LCD_Write(LCD_SET_CGRAM_ADDR | (memory_location << 3));
     delayMicroseconds(37);
