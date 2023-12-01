@@ -1,5 +1,5 @@
-#ifndef _LCD_CONSTANTS_H
-#define _LCD_CONSTANTS_H
+#ifndef _LCD_CONSTANTS_H_
+#define _LCD_CONSTANTS_H_
 
 /**
  * @brief Define Instructions Constants of HD44780U

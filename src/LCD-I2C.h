@@ -1,12 +1,14 @@
-#ifndef _LCD-I2C_h
-#define _LCD-I2C_h
+#ifndef _LCD_I2C_H_
+#define _LCD_I2C_H_
 
 #include "Arduino.h"
 #include <LCD_Constants.h>
 
-/* This struct helps us constructing the I2C output based on data and control outputs.
+/*
+   This struct helps us constructing the I2C output based on data and control outputs.
    Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
-   while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.*/
+   while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.
+*/
 struct OutputState {
     uint8_t rs = 0;
     uint8_t rw = 0;
@@ -34,9 +36,9 @@ struct OutputState {
     }
 };
 
-class LCD-I2C : public Print {
+class LCD_I2C : public Print {
     public:
-        LCD-I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2)
+        LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2)
         : _address(address), _columnMax(--columns), _rowMax(--rows) {}
 
         void begin(bool beginWire = true);

@@ -6,7 +6,7 @@
  * 
  * @param beginWire if true start I²C wire
  */
-void LCD-I2C::begin(bool beginWire) {
+void LCD_I2C::begin(bool beginWire) {
     if (beginWire)
         Wire.begin();
 
@@ -20,7 +20,7 @@ void LCD-I2C::begin(bool beginWire) {
  * @brief switch backlight on
  * 
  */
-void LCD-I2C::backlight() {
+void LCD_I2C::backlight() {
     _output.Led = 1;
     I2C_Write(0b00000000 | _output.Led << 3); // Led pin is independent from LCD data and control lines.
 }
@@ -29,7 +29,7 @@ void LCD-I2C::backlight() {
  * @brief switch backlight off
  * 
  */
-void LCD-I2C::noBacklight() {
+void LCD_I2C::noBacklight() {
     _output.Led = 0;
     I2C_Write(0b00000000 | _output.Led << 3); // Led pin is independent from LCD data and control lines.
 }
@@ -38,7 +38,7 @@ void LCD-I2C::noBacklight() {
  * @brief clear display
  * 
  */
-void LCD-I2C::clear() {
+void LCD_I2C::clear() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -50,7 +50,7 @@ void LCD-I2C::clear() {
  * @brief set home position
  * 
  */
-void LCD-I2C::home() {
+void LCD_I2C::home() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -63,7 +63,7 @@ void LCD-I2C::home() {
  * @brief set left to right
  * 
  */
-void LCD-I2C::leftToRight() {
+void LCD_I2C::leftToRight() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -78,7 +78,7 @@ void LCD-I2C::leftToRight() {
  * @brief set right to left
  * 
  */
-void LCD-I2C::rightToLeft() {
+void LCD_I2C::rightToLeft() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -93,7 +93,7 @@ void LCD-I2C::rightToLeft() {
  * @brief set autoscroll
  * 
  */
-void LCD-I2C::autoscroll() {
+void LCD_I2C::autoscroll() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -108,7 +108,7 @@ void LCD-I2C::autoscroll() {
  * @brief set no autoscroll
  * 
  */
-void LCD-I2C::noAutoscroll() {
+void LCD_I2C::noAutoscroll() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -123,7 +123,7 @@ void LCD-I2C::noAutoscroll() {
  * @brief show display
  * 
  */
-void LCD-I2C::display() {
+void LCD_I2C::display() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -138,7 +138,7 @@ void LCD-I2C::display() {
  * @brief show no display
  * 
  */
-void LCD-I2C::noDisplay() {
+void LCD_I2C::noDisplay() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -153,7 +153,7 @@ void LCD-I2C::noDisplay() {
  * @brief show cursor
  * 
  */
-void LCD-I2C::cursor() {
+void LCD_I2C::cursor() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -168,7 +168,7 @@ void LCD-I2C::cursor() {
  * @brief set display => no cursor
  * 
  */
-void LCD-I2C::noCursor() {
+void LCD_I2C::noCursor() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -183,7 +183,7 @@ void LCD-I2C::noCursor() {
  * @brief Set Cursor blink
  * 
  */
-void LCD-I2C::blink() {
+void LCD_I2C::blink() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -198,7 +198,7 @@ void LCD-I2C::blink() {
  * @brief Set Cursor no blink
  * 
  */
-void LCD-I2C::noBlink() {
+void LCD_I2C::noBlink() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -212,7 +212,7 @@ void LCD-I2C::noBlink() {
  * @brief scroll display left
  * 
  */
-void LCD-I2C::scrollDisplayLeft() {
+void LCD_I2C::scrollDisplayLeft() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -225,7 +225,7 @@ void LCD-I2C::scrollDisplayLeft() {
  * @brief scroll display right
  * 
  */
-void LCD-I2C::scrollDisplayRight() {
+void LCD_I2C::scrollDisplayRight() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -239,7 +239,7 @@ void LCD-I2C::scrollDisplayRight() {
  * @param memory_location memory location where char is saved
  * @param charmap defined character map
  */
-void LCD-I2C::createChar(uint8_t memory_location, uint8_t charmap[]) {
+void LCD_I2C::createChar(uint8_t memory_location, uint8_t charmap[]) {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -261,7 +261,7 @@ void LCD-I2C::createChar(uint8_t memory_location, uint8_t charmap[]) {
  * @param col 
  * @param row 
  */
-void LCD-I2C::setCursor(uint8_t col, uint8_t row) {
+void LCD_I2C::setCursor(uint8_t col, uint8_t row) {
     static const uint8_t row_offsets[] = {0x00, 0x40, 0x14, 0x54};
     _output.rs = 0;
     _output.rw = 0;
@@ -282,7 +282,7 @@ void LCD-I2C::setCursor(uint8_t col, uint8_t row) {
  * @param character to write 
  * @return size_t written bytes
  */
-size_t LCD-I2C::write(uint8_t character) {
+size_t LCD_I2C::write(uint8_t character) {
     _output.rs = 1;
     _output.rw = 0;
 
@@ -296,7 +296,7 @@ size_t LCD-I2C::write(uint8_t character) {
  * @brief Funtion to initialize LCD
  * 
  */
-void LCD-I2C::InitializeLCD() {
+void LCD_I2C::InitializeLCD() {
     // See HD44780U datasheet "Initializing by Instruction" Figure 24 (4-Bit Interface)
     _output.rs = 0;
     _output.rw = 0;
@@ -324,7 +324,7 @@ void LCD-I2C::InitializeLCD() {
  * 
  * @param output data to write
  */
-void LCD-I2C::I2C_Write(uint8_t output) {
+void LCD_I2C::I2C_Write(uint8_t output) {
     Wire.beginTransmission(_address);
     Wire.write(output);
     Wire.endTransmission();
@@ -336,7 +336,7 @@ void LCD-I2C::I2C_Write(uint8_t output) {
  * @param output data to write
  * @param initialization initialization
  */
-void LCD-I2C::LCD_Write(uint8_t output, bool initialization) {
+void LCD_I2C::LCD_Write(uint8_t output, bool initialization) {
     _output.data = output;
 
     _output.E = true;
