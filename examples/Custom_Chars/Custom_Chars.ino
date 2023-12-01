@@ -10,6 +10,7 @@
 #include <LCD-I2C.h>
 
 // Default address of most PCF8574 modules, change according
+
 LCD_I2C lcd(0x27, 16, 2);
 
 uint8_t happy[8] =
