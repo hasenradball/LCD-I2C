@@ -23,4 +23,4 @@ jobs:
       - name: Spell check
         uses: codespell-project/actions-codespell@master
         with:
-          skip: ./.git, ./docs/*.*
+          skip: ./.git, HD44780.pdf
