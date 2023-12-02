@@ -19,7 +19,7 @@ home                KEYWORD2
 leftToRight         KEYWORD2
 rightToLeft         KEYWORD2
 autoscroll          KEYWORD2
-autoscrollOff        KEYWORD2
+autoscrollOff       KEYWORD2
 display             KEYWORD2
 displayOff          KEYWORD2
 cursor              KEYWORD2
