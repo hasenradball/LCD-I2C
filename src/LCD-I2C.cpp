@@ -9,10 +9,11 @@
 void LCD_I2C::begin(bool beginWire) {
     if (beginWire)
         Wire.begin();
-
-    I2C_Write(0b00000000); // Clear i2c adapter
-    delay(50); //Wait more than 40ms after powerOn.
-
+    
+    // Clear i2c adapter
+    I2C_Write(0b00000000);
+    // Wait more than 40 ms after powerOn
+    delay(50);
     InitializeLCD();
 }
 
@@ -22,7 +23,8 @@ void LCD_I2C::begin(bool beginWire) {
  */
 void LCD_I2C::backlight() {
     _output.Led = 1;
-    I2C_Write(0b00000000 | _output.Led << 3); // Led pin is independent from LCD data and control lines.
+    // Led pin is independent from LCD data and control lines.
+    I2C_Write(0b00000000 | _output.Led << 3);
 }
 
 /**
@@ -31,7 +33,8 @@ void LCD_I2C::backlight() {
  */
 void LCD_I2C::noBacklight() {
     _output.Led = 0;
-    I2C_Write(0b00000000 | _output.Led << 3); // Led pin is independent from LCD data and control lines.
+    // Led pin is independent from LCD data and control lines.
+    I2C_Write(0b00000000 | _output.Led << 3); 
 }
 
 /**
@@ -42,8 +45,8 @@ void LCD_I2C::clear() {
     _output.rs = 0;
     _output.rw = 0;
 
-    LCD_Write(LCD_CLEAR);
-    delayMicroseconds(1600);
+    LCD_Write(HD44780_CLEAR_DISPLAY);
+    delayMicroseconds(1550);
 }
 
 /**
@@ -54,8 +57,8 @@ void LCD_I2C::home() {
     _output.rs = 0;
     _output.rw = 0;
 
-    LCD_Write(LCD_HOME);
-    delayMicroseconds(1600);
+    LCD_Write(HD44780_CURSOR_HOME);
+    delayMicroseconds(1550);
 }
 
 
@@ -67,9 +70,9 @@ void LCD_I2C::leftToRight() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _entryState |= 1 << 1;
+    _entryState |= (1 << 1);
 
-    LCD_Write(LCD_ENTRY_MODE_SET | _entryState);
+    LCD_Write(HD44780_ENTRY_MODE_SET | _entryState);
     delayMicroseconds(37);
 }
 
@@ -84,7 +87,7 @@ void LCD_I2C::rightToLeft() {
 
     _entryState &= ~(1 << 1);
 
-    LCD_Write(LCD_ENTRY_MODE_SET | _entryState);
+    LCD_Write(HD44780_ENTRY_MODE_SET | _entryState);
     delayMicroseconds(37);
 }
 
@@ -99,7 +102,7 @@ void LCD_I2C::autoscroll() {
 
     _entryState |= 1;
 
-    LCD_Write(LCD_ENTRY_MODE_SET | _entryState);
+    LCD_Write(HD44780_ENTRY_MODE_SET | _entryState);
     delayMicroseconds(37);
 }
 
@@ -114,7 +117,7 @@ void LCD_I2C::noAutoscroll() {
 
     _entryState &= ~1;
 
-    LCD_Write(LCD_ENTRY_MODE_SET | _entryState);
+    LCD_Write(HD44780_ENTRY_MODE_SET | _entryState);
     delayMicroseconds(37);
 }
 
@@ -127,24 +130,24 @@ void LCD_I2C::display() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _displayState |= 1 << 2;
+    _displayState |= (1 << 2);
 
-    LCD_Write(LCD_DISPLAY_CONTROL | _displayState);
+    LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
 }
 
 
 /**
- * @brief show no display
+ * @brief display off
  * 
  */
-void LCD_I2C::noDisplay() {
+void LCD_I2C::displayOff() {
     _output.rs = 0;
     _output.rw = 0;
 
     _displayState &= ~(1 << 2);
 
-    LCD_Write(LCD_DISPLAY_CONTROL | _displayState);
+    LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
 }
 
@@ -157,9 +160,9 @@ void LCD_I2C::cursor() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _displayState |= 1 << 1;
+    _displayState |= (1 << 1);
 
-    LCD_Write(LCD_DISPLAY_CONTROL | _displayState);
+    LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
 }
 
@@ -168,19 +171,19 @@ void LCD_I2C::cursor() {
  * @brief set display => no cursor
  * 
  */
-void LCD_I2C::noCursor() {
+void LCD_I2C::cursorOff() {
     _output.rs = 0;
     _output.rw = 0;
 
     _displayState &= ~(1 << 1);
 
-    LCD_Write(LCD_DISPLAY_CONTROL | _displayState);
+    LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
 }
 
 
 /**
- * @brief Set Cursor blink
+ * @brief Set cursor blinkin on 
  * 
  */
 void LCD_I2C::blink() {
@@ -189,22 +192,22 @@ void LCD_I2C::blink() {
 
     _displayState |= 1;
 
-    LCD_Write(LCD_DISPLAY_CONTROL | _displayState);
+    LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
 }
 
 
 /**
- * @brief Set Cursor no blink
+ * @brief Set cursor blinking off
  * 
  */
-void LCD_I2C::noBlink() {
+void LCD_I2C::blinkOff() {
     _output.rs = 0;
     _output.rw = 0;
 
     _displayState &= ~1;
 
-    LCD_Write(LCD_DISPLAY_CONTROL | _displayState);
+    LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
 }
 
@@ -245,7 +248,7 @@ void LCD_I2C::createChar(uint8_t memory_location, uint8_t charmap[]) {
 
     memory_location %= 8;
 
-    LCD_Write(LCD_SET_CGRAM_ADDR | (memory_location << 3));
+    LCD_Write(HD44780_SET_CGRAM_ADDR | (memory_location << 3));
     delayMicroseconds(37);
 
     for (int i = 0; i < 8; i++)
@@ -272,7 +275,7 @@ void LCD_I2C::setCursor(uint8_t col, uint8_t row) {
 
     uint8_t newAddress = row_offsets[row] + col;
 
-    LCD_Write(LCD_SET_DDRRAM_ADDR | newAddress);
+    LCD_Write(HD44780_SET_DDRRAM_ADDR | newAddress);
     delayMicroseconds(37);
 }
 
@@ -298,23 +301,29 @@ size_t LCD_I2C::write(uint8_t character) {
  */
 void LCD_I2C::InitializeLCD() {
     // See HD44780U datasheet "Initializing by Instruction" Figure 24 (4-Bit Interface)
+    // SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
+	// according to datasheet, we need at least 40 ms after power rises above 2.7 V
+	// before sending commands. Arduino can turn on way before 4.5 V so we'll wait 50
     _output.rs = 0;
     _output.rw = 0;
 
+    // wait mor than 40 ms after Vcc = 2.7 V
+    delay(50);
+
+    // first
     LCD_Write(0b00110000, true);
     delayMicroseconds(4200);
+    // second
     LCD_Write(0b00110000, true);
     delayMicroseconds(150);
+    // third
     LCD_Write(0b00110000, true);
     delayMicroseconds(37);
-    // Function Set - 4 bits mode
-    LCD_Write(LCD_FUNCTION_SET, true);
-    delayMicroseconds(37);
-    // Function Set - 4 bits(Still), 2 lines, 5x8 font
-    LCD_Write(0b00101000);
-    delayMicroseconds(37);
 
-    display();
+    // Function Set  - 8 bit Interface, 1 = 2 lines, 0 = 5x8 font
+    LCD_Write(0b00111000);
+
+    displayOff();
     clear();
     leftToRight();
 }
@@ -341,7 +350,7 @@ void LCD_I2C::LCD_Write(uint8_t output, bool initialization) {
 
     _output.E = true;
     I2C_Write(_output.GetHighData());
-    // High part of enable should be >450 nS
+    // High part of enable should be >450 ns
     delayMicroseconds(1);
 
     _output.E = false;
@@ -354,7 +363,7 @@ void LCD_I2C::LCD_Write(uint8_t output, bool initialization) {
 
         _output.E = true;
         I2C_Write(_output.GetLowData());
-        // High part of enable should be >450 nS
+        // High part of enable should be >450 ns
         delayMicroseconds(1); 
 
         _output.E = false;

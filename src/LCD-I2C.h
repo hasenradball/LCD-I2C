@@ -52,17 +52,16 @@ class LCD_I2C : public Print {
         void autoscroll();
         void noAutoscroll();
         void display();
-        void noDisplay();
+        void displayOff();
         void cursor();
-        void noCursor();
+        void CursorOff();
         void blink();
-        void noBlink();
+        void blinkOff();
         void scrollDisplayLeft();
         void scrollDisplayRight();
         void createChar(uint8_t location, uint8_t charmap[]);
         void setCursor(uint8_t col, uint8_t row);
-
-        // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
+b        // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
         virtual size_t write(uint8_t character);
 
 
