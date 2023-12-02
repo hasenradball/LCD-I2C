@@ -18,7 +18,7 @@ The Hitachi HD44780 LCD controller is an alphanumeric dot matrix liquid crystal 
 In 8-bit mode, all transfers happen in one cycle of the enable pin (E) with all 8 bits on the data bus and the RS and R/W pins stable. In 4-bit mode, data are transferred as pairs of 4-bit "nibbles" on the upper data pins, D7–D4, with two enable pulses and the RS and R/W pins stable. The four most significant bits (7–4) must be written first, followed by the four least significant bits (3–0). The high/low sequence must be completed each time or the controller will not properly receive further commands.
 
 ### Character Generator ROM (CGROM)
-The internal CGROM includes 208 charaters in a 5x8 dot matrix, and also 32 characters in a 5x10 dot matrix.
+The internal CGROM includes 208 characters in a 5x8 dot matrix, and also 32 characters in a 5x10 dot matrix.
 The 5x10 matrix is generally not used.
 
 ### Character Generator RAM (CGRAM)
@@ -30,7 +30,7 @@ This enables to store characters which are not available in the CGROM.
 # License
 This library is licensed under MIT Licence.
 
-[LCD-I2C lisence](https://github.com/hasenradball/LCD-I2C/blob/master/LICENSE)
+[LCD-I2C licence](https://github.com/hasenradball/LCD-I2C/blob/master/LICENSE)
 
 # Helpful Links
 [Wikipedia - a great description of HD44780 module](https://de.wikipedia.org/wiki/HD44780)

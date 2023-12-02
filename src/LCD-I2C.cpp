@@ -296,7 +296,7 @@ size_t LCD_I2C::write(uint8_t character) {
 }
 
 /**
- * @brief Funtion to initialize LCD
+ * @brief Function to initialize LCD
  * 
  */
 void LCD_I2C::InitializeLCD() {
@@ -307,7 +307,7 @@ void LCD_I2C::InitializeLCD() {
     _output.rs = 0;
     _output.rw = 0;
 
-    // wait mor than 40 ms after Vcc = 2.7 V
+    // wait more than 40 ms after Vcc = 2.7 V
     delay(50);
 
     // first
@@ -333,7 +333,7 @@ void LCD_I2C::InitializeLCD() {
 }
 
 /**
- * @brief I²C write funtion
+ * @brief I²C write function
  * 
  * @param output data to write
  */
