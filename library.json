@@ -1,0 +1,20 @@
+{
+    "name": "LCD-I2C",
+    "version": "0.1.0",
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/hasenradball/LCD-I2C"
+    },
+    "description": "C++ Library for Liquid Crystal Displays (LCD) with the Hitachi HD44780 display driver.",
+    "keywords": ["HD44780", "LCD", "Display"],
+    "authors":
+    {
+        "name": "Frank Häfele",
+        "mail": "mail@frankhaefele.de",
+        "url": "http://esp8266-01-adapter.de",
+        "maintainer": true
+    },
+    "frameworks": ["Arduino"],
+    "platforms": ["atmelavr", "espressif8266", "espressif32", "atmelsam"]
+}
