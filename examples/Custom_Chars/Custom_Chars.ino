@@ -64,7 +64,7 @@ uint8_t snow[8] =
 void setup()
 {
     lcd.begin();
-	lcd.display();
+    lcd.display();
     lcd.backlight();
 
     lcd.createChar(0, happy);

@@ -23,7 +23,7 @@ LCD_I2C lcd(0x27, 16, 2);
 
 void setup() {
     lcd.begin();
-	  lcd.display();
+    lcd.display();
     lcd.backlight();
 }
 
@@ -41,7 +41,7 @@ void loop()
         delay(200);
     }
 
-    lcd.noAutoscroll();
+    lcd.autoscrollOff();
     lcd.clear();
 
     // Scroll left and right
