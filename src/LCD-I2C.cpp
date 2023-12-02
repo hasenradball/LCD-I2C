@@ -350,7 +350,7 @@ void LCD_I2C::LCD_Write(uint8_t output, bool initialization) {
 
     _output.E = true;
     I2C_Write(_output.GetHighData());
-    // High part of enable should be >450 ns
+    // High part of enable should be > 450 ns
     delayMicroseconds(1);
 
     _output.E = false;
@@ -363,7 +363,7 @@ void LCD_I2C::LCD_Write(uint8_t output, bool initialization) {
 
         _output.E = true;
         I2C_Write(_output.GetLowData());
-        // High part of enable should be >450 ns
+        // High part of enable should be > 450 ns
         delayMicroseconds(1); 
 
         _output.E = false;

@@ -24,6 +24,7 @@ LCD_I2C lcd(0x27, 16, 2);
 void setup()
 {
     lcd.begin();
+	lcd.display();
     lcd.backlight();
 }
 
@@ -77,9 +78,9 @@ void loop()
 
     //Blink without cursor
     lcd.setCursor(0, 0);
-    lcd.noCursor();
+    lcd.cursorOff();
     lcd.print(F("Just blink"));
     delay(3000);
-    lcd.noBlink();
+    lcd.blinkOff();
     lcd.clear();
 }
