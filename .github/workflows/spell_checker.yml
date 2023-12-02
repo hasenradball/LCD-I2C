@@ -23,4 +23,4 @@ jobs:
       - name: Spell check
         uses: codespell-project/actions-codespell@master
         with:
-          exclude_file: ./docs/*.pdf
+          exclude_file: ./docs/*.*
