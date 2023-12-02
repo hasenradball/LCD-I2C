@@ -31,7 +31,7 @@ void LCD_I2C::backlight() {
  * @brief switch backlight off
  * 
  */
-void LCD_I2C::noBacklight() {
+void LCD_I2C::backlightOff() {
     _output.Led = 0;
     // Led pin is independent from LCD data and control lines.
     I2C_Write(0b00000000 | _output.Led << 3); 
@@ -111,7 +111,7 @@ void LCD_I2C::autoscroll() {
  * @brief set no autoscroll
  * 
  */
-void LCD_I2C::noAutoscroll() {
+void LCD_I2C::autoscrollOff() {
     _output.rs = 0;
     _output.rw = 0;
 
@@ -319,9 +319,13 @@ void LCD_I2C::InitializeLCD() {
     // third
     LCD_Write(0b00110000, true);
     delayMicroseconds(37);
-
-    // Function Set  - 8 bit Interface, 1 = 2 lines, 0 = 5x8 font
-    LCD_Write(0b00111000);
+    
+    // Function Set - 4 bits mode
+    LCD_Write(0b00100000, true);
+    delayMicroseconds(37);
+    // Function Set  - 4 bit Interface, 1 = 2 lines, 0 = 5x8 font
+    LCD_Write(0b00101000);
+    delayMicroseconds(37);
 
     displayOff();
     clear();

@@ -21,10 +21,9 @@ LCD_I2C lcd(0x27, 16, 2);
 * More info: https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
 */
 
-void setup()
-{
+void setup() {
     lcd.begin();
-	lcd.display();
+	  lcd.display();
     lcd.backlight();
 }
 
