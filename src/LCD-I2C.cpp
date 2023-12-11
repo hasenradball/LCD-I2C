@@ -38,7 +38,7 @@ void LCD_I2C::backlightOff() {
 }
 
 /**
- * @brief clear display
+ * @brief Clears the LCD screen and positions the cursor in the upper-left corner.
  * 
  */
 void LCD_I2C::clear() {
@@ -50,7 +50,9 @@ void LCD_I2C::clear() {
 }
 
 /**
- * @brief set home position
+ * @brief Positions the cursor in the upper-left of the LCD.
+ *  That is, use that location in outputting subsequent text to the display.
+ *  To also clear the display, use the clear() function instead.
  * 
  */
 void LCD_I2C::home() {
@@ -63,7 +65,9 @@ void LCD_I2C::home() {
 
 
 /**
- * @brief set left to right
+ * @brief Set the direction for text written to the LCD to left-to-right, the default.
+ *  This means that subsequent characters written to the display will go from left to right,
+ *  but does not affect previously-output text.
  * 
  */
 void LCD_I2C::leftToRight() {
@@ -78,7 +82,9 @@ void LCD_I2C::leftToRight() {
 
 
 /**
- * @brief set right to left
+ * @brief Set the direction for text written to the LCD to right-to-left (the default is left-to-right).
+ *  This means that subsequent characters written to the display will go from right to left,
+ *  but does not affect previously-output text.
  * 
  */
 void LCD_I2C::rightToLeft() {
@@ -93,8 +99,12 @@ void LCD_I2C::rightToLeft() {
 
 
 /**
- * @brief set autoscroll
- * 
+ * @brief set autoscroll on.
+ *  Each character is printed on the same location on the LCD.
+ *  Depending on the current text direction, autoscroll moves each character
+ *  to the left when left => right is set.
+ *  Or moves each character to the right when right => left is set.
+ *  
  */
 void LCD_I2C::autoscroll() {
     _output.rs = 0;
@@ -108,7 +118,8 @@ void LCD_I2C::autoscroll() {
 
 
 /**
- * @brief set no autoscroll
+ * @brief Set autoscroll off.
+ * Moves the cursor one step when adding a character.
  * 
  */
 void LCD_I2C::autoscrollOff() {
@@ -123,7 +134,8 @@ void LCD_I2C::autoscrollOff() {
 
 
 /**
- * @brief show display
+ * @brief Turns on the LCD display, after it’s been turned off with noDisplay().
+ * This will restore the text (and cursor) that was on the display.
  * 
  */
 void LCD_I2C::display() {
@@ -138,7 +150,7 @@ void LCD_I2C::display() {
 
 
 /**
- * @brief display off
+ * @brief Turns off the LCD display, without losing the text currently shown on it.
  * 
  */
 void LCD_I2C::displayOff() {
@@ -153,7 +165,7 @@ void LCD_I2C::displayOff() {
 
 
 /**
- * @brief show cursor
+ * @brief Shows the cursor.
  * 
  */
 void LCD_I2C::cursor() {
@@ -168,7 +180,7 @@ void LCD_I2C::cursor() {
 
 
 /**
- * @brief set display => no cursor
+ * @brief Hides the cursor.
  * 
  */
 void LCD_I2C::cursorOff() {
@@ -183,7 +195,8 @@ void LCD_I2C::cursorOff() {
 
 
 /**
- * @brief Set cursor blinkin on 
+ * @brief Display the blinking LCD cursor.
+ *  If used in combination with the cursor() function, the result will depend on the particular display. 
  * 
  */
 void LCD_I2C::blink() {
@@ -198,7 +211,7 @@ void LCD_I2C::blink() {
 
 
 /**
- * @brief Set cursor blinking off
+ * @brief Turns off the blinking LCD cursor.
  * 
  */
 void LCD_I2C::blinkOff() {
@@ -212,7 +225,7 @@ void LCD_I2C::blinkOff() {
 }
 
 /**
- * @brief scroll display left
+ * @brief Scrolls the contents of the display (text and cursor) one space to the left.
  * 
  */
 void LCD_I2C::scrollDisplayLeft() {
@@ -225,7 +238,7 @@ void LCD_I2C::scrollDisplayLeft() {
 
 
 /**
- * @brief scroll display right
+ * @brief Scrolls the contents of the display (text and cursor) one space to the right.
  * 
  */
 void LCD_I2C::scrollDisplayRight() {
@@ -237,7 +250,11 @@ void LCD_I2C::scrollDisplayRight() {
 }
 
 /**
- * @brief Function to create character
+ * @brief Create a custom character (glyph) for use on the LCD.
+ *  Up to eight characters of 5x8 pixels are supported (numbered 0 to 7).
+ *  The appearance of each custom character is specified by an array of eight bytes,
+ *  one for each row. The five least significant bits of each byte determine the pixels in that row.
+ *  To display a custom character on the screen, write() its number.
  * 
  * @param memory_location memory location where char is saved
  * @param charmap defined character map
@@ -259,28 +276,28 @@ void LCD_I2C::createChar(uint8_t memory_location, uint8_t charmap[]) {
 
 
 /**
- * @brief Set Cursor to col and row
+ * @brief Set Cursor to position defined by column and row
  * 
  * @param col 
  * @param row 
  */
-void LCD_I2C::setCursor(uint8_t col, uint8_t row) {
+void LCD_I2C::setCursor(uint8_t column, uint8_t row) {
     static const uint8_t row_offsets[] = {0x00, 0x40, 0x14, 0x54};
     _output.rs = 0;
     _output.rw = 0;
      // sanity limits
-    if (col > _columnMax) { col = _columnMax; }
+    if (column > _columnMax) { column = _columnMax; }
     // sanity limits
     if (row > _rowMax) { row = _rowMax; }
 
-    uint8_t newAddress = row_offsets[row] + col;
+    uint8_t newAddress = row_offsets[row] + column;
 
     LCD_Write(HD44780_SET_DDRRAM_ADDR | newAddress);
     delayMicroseconds(37);
 }
 
 /**
- * @brief write function 
+ * @brief Write a character to the LCD.
  * 
  * @param character to write 
  * @return size_t written bytes
