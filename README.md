@@ -1,6 +1,6 @@
 # LCD-I2C
-![](https://github.com/hasenradball/LCD-I2C/actions/workflows/spell_checker.yml/badge.svg)
-![](https://github.com/hasenradball/LCD-I2C/actions/workflows/compile_examples.yml/badge.svg)
+[![Spell Check](https://github.com/hasenradball/LCD-I2C/actions/workflows/spell_checker.yml/badge.svg)](https://github.com/hasenradball/LCD-I2C/actions/workflows/spell_checker.yml)
+[![Compile Examples](https://github.com/hasenradball/LCD-I2C/actions/workflows/compile_examples.yml/badge.svg)](https://github.com/hasenradball/LCD-I2C/actions/workflows/compile_examples.yml)
 
 C++ Library for Liquid Crystal Displays (LCD) with the Hitachi HD44780 display driver.
 The communication is realized by a PCF8574 remote 8 bit I/O Expander for I²c Bus.

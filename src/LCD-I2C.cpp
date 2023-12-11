@@ -290,7 +290,7 @@ void LCD_I2C::setCursor(uint8_t column, uint8_t row) {
     // sanity limits
     if (row > _rowMax) { row = _rowMax; }
 
-    uint8_t newAddress = row_offsets[row] + col;
+    uint8_t newAddress = row_offsets[row] + column;
 
     LCD_Write(HD44780_SET_DDRRAM_ADDR | newAddress);
     delayMicroseconds(37);
