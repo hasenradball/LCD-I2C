@@ -60,7 +60,7 @@ class LCD_I2C : public Print {
         void scrollDisplayLeft();
         void scrollDisplayRight();
         void createChar(uint8_t memory_location, uint8_t charmap[]);
-        void setCursor(uint8_t col, uint8_t row);
+        void setCursor(uint8_t column, uint8_t row);
         // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
         virtual size_t write(uint8_t character);
 
