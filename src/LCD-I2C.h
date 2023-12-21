@@ -10,9 +10,15 @@
    while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.
 */
 struct OutputState {
+    // Select register
+    // 0: instruction register
+    // 1: data register
     uint8_t rs = 0;
+    // select read or write
     uint8_t rw = 0;
+    // Enable: starts data read or write
     uint8_t E = 0;
+    // LED status
     uint8_t Led = 0;
     uint8_t data = 0;
 
@@ -22,7 +28,6 @@ struct OutputState {
         buffer |= E << 2;
         buffer |= Led << 3;
         buffer |= (data & 0x0F) << 4;
-
         return buffer;
     }
 
