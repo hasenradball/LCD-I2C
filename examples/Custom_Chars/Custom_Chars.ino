@@ -61,8 +61,7 @@ uint8_t snow[8] =
     0b10000
 };
 
-void setup()
-{
+void setup() {
     lcd.begin();
     lcd.display();
     lcd.backlight();
@@ -79,6 +78,5 @@ void setup()
     lcd.write(3);
 }
 
-void loop()
-{
+void loop() {
 }

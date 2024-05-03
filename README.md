@@ -62,3 +62,5 @@ This library is licensed under MIT Licence.
 
 [How to Initialize LCD correctly](https://web.alfredstate.edu/faculty/weimandn/lcd/lcd_initialization/lcd_initialization_index.html)
 
+[LCD Addressing](https://web.alfredstate.edu/faculty/weimandn/lcd/lcd_addressing/lcd_addressing_index.html)
+
