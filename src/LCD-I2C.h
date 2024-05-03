@@ -10,27 +10,32 @@
    while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.
 */
 struct OutputState {
+    // Select register
+    // 0: instruction register
+    // 1: data register
     uint8_t rs = 0;
+    // select read or write
     uint8_t rw = 0;
-    uint8_t E = 0;
-    uint8_t Led = 0;
+    // Enable: starts data read or write
+    uint8_t en = 0;
+    // LED status
+    uint8_t led = 0;
     uint8_t data = 0;
 
     uint8_t GetLowData() {
         uint8_t buffer = rs;
         buffer |= rw << 1;
-        buffer |= E << 2;
-        buffer |= Led << 3;
+        buffer |= en << 2;
+        buffer |= led << 3;
         buffer |= (data & 0x0F) << 4;
-
         return buffer;
     }
 
     uint8_t GetHighData() {
         uint8_t buffer = rs;
         buffer |= rw << 1;
-        buffer |= E << 2;
-        buffer |= Led << 3;
+        buffer |= en << 2;
+        buffer |= led << 3;
         buffer |= (data & 0xF0);
         return buffer;
     }
@@ -61,6 +66,7 @@ class LCD_I2C : public Print {
         void scrollDisplayRight();
         void createChar(uint8_t memory_location, uint8_t charmap[]);
         void setCursor(uint8_t column, uint8_t row);
+        void writeCharCode(uint8_t code);
         // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
         virtual size_t write(uint8_t character);
 

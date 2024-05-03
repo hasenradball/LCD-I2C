@@ -22,9 +22,9 @@ void LCD_I2C::begin(bool beginWire) {
  * 
  */
 void LCD_I2C::backlight() {
-    _output.Led = 1;
+    _output.led = 1;
     // Led pin is independent from LCD data and control lines.
-    I2C_Write(0b00000000 | _output.Led << 3);
+    I2C_Write(0b00000000 | _output.led << 3);
 }
 
 /**
@@ -32,9 +32,9 @@ void LCD_I2C::backlight() {
  * 
  */
 void LCD_I2C::backlightOff() {
-    _output.Led = 0;
+    _output.led = 0;
     // Led pin is independent from LCD data and control lines.
-    I2C_Write(0b00000000 | _output.Led << 3); 
+    I2C_Write(0b00000000 | _output.led << 3); 
 }
 
 /**
@@ -74,7 +74,7 @@ void LCD_I2C::leftToRight() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _entryState |= (1 << 1);
+    _entryState |= HD44780_ENTRY_SHIFTINCREMENT;
 
     LCD_Write(HD44780_ENTRY_MODE_SET | _entryState);
     delayMicroseconds(37);
@@ -91,7 +91,7 @@ void LCD_I2C::rightToLeft() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _entryState &= ~(1 << 1);
+    _entryState &= ~HD44780_ENTRY_SHIFTINCREMENT;
 
     LCD_Write(HD44780_ENTRY_MODE_SET | _entryState);
     delayMicroseconds(37);
@@ -110,7 +110,7 @@ void LCD_I2C::autoscroll() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _entryState |= 1;
+    _entryState |= HD44780_ACCOMPANIES_DISPLAY_SHIFT;
 
     LCD_Write(HD44780_ENTRY_MODE_SET | _entryState);
     delayMicroseconds(37);
@@ -126,7 +126,7 @@ void LCD_I2C::autoscrollOff() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _entryState &= ~1;
+    _entryState &= ~HD44780_ACCOMPANIES_DISPLAY_SHIFT;
 
     LCD_Write(HD44780_ENTRY_MODE_SET | _entryState);
     delayMicroseconds(37);
@@ -142,7 +142,7 @@ void LCD_I2C::display() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _displayState |= (1 << 2);
+    _displayState |= HD44780_DISPLAY_ON;
 
     LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
@@ -157,7 +157,7 @@ void LCD_I2C::displayOff() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _displayState &= ~(1 << 2);
+    _displayState &= ~HD44780_DISPLAY_ON;
 
     LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
@@ -172,7 +172,7 @@ void LCD_I2C::cursor() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _displayState |= (1 << 1);
+    _displayState |= HD44780_CURSOR_ON;
 
     LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
@@ -187,7 +187,7 @@ void LCD_I2C::cursorOff() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _displayState &= ~(1 << 1);
+    _displayState &= ~HD44780_CURSOR_ON;
 
     LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
@@ -203,7 +203,7 @@ void LCD_I2C::blink() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _displayState |= 1;
+    _displayState |= HD44780_BLINK_ON;
 
     LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
@@ -218,7 +218,7 @@ void LCD_I2C::blinkOff() {
     _output.rs = 0;
     _output.rw = 0;
 
-    _displayState &= ~1;
+    _displayState &= ~HD44780_BLINK_ON;
 
     LCD_Write(HD44780_DISPLAY_CONTROL | _displayState);
     delayMicroseconds(37);
@@ -327,27 +327,42 @@ void LCD_I2C::InitializeLCD() {
     // wait more than 40 ms after Vcc = 2.7 V
     delay(50);
 
-    // first
+    // first - 0x30
     LCD_Write(0b00110000, true);
     delayMicroseconds(4200);
-    // second
+    // second - 0x30
     LCD_Write(0b00110000, true);
     delayMicroseconds(150);
-    // third
+    // third - 0x30
     LCD_Write(0b00110000, true);
     delayMicroseconds(37);
     
-    // Function Set - 4 bits mode
+    // Function Set - 4 bits mode write 0x20
     LCD_Write(0b00100000, true);
     delayMicroseconds(37);
-    // Function Set  - 4 bit Interface, 1 = 2 lines, 0 = 5x8 font
-    LCD_Write(0b00101000);
+    
+    // Setup Display Function Set  - 4 bit Interface, 1 = 2 lines, 0 = 5x8 font
+    LCD_Write(HD44780_FUNCTION_SET | HD44780_4_BIT_MODE | HD44780_2_LINE | HD44780_5x8_DOTS);
     delayMicroseconds(37);
 
     displayOff();
     clear();
     leftToRight();
 }
+
+/**
+ * @brief write character code from corresponding code table
+ * 
+ * see HD44780.pdf => page 17
+ * 
+ * @param output 
+ */
+void LCD_I2C::writeCharCode(uint8_t code) {
+    _output.rs = 1;
+    LCD_Write(code);
+    delayMicroseconds(37);
+}
+
 
 /**
  * @brief I²C write function
@@ -369,12 +384,12 @@ void LCD_I2C::I2C_Write(uint8_t output) {
 void LCD_I2C::LCD_Write(uint8_t output, bool initialization) {
     _output.data = output;
 
-    _output.E = true;
+    _output.en = true;
     I2C_Write(_output.GetHighData());
     // High part of enable should be > 450 ns
     delayMicroseconds(1);
 
-    _output.E = false;
+    _output.en = false;
     I2C_Write(_output.GetHighData());
 
     // During initialization we only send half a byte
@@ -382,12 +397,12 @@ void LCD_I2C::LCD_Write(uint8_t output, bool initialization) {
         // I think we need a delay between half byte writes, but no sure how long it needs to be.
         delayMicroseconds(37);
 
-        _output.E = true;
+        _output.en = true;
         I2C_Write(_output.GetLowData());
         // High part of enable should be > 450 ns
         delayMicroseconds(1); 
 
-        _output.E = false;
+        _output.en = false;
         I2C_Write(_output.GetLowData());
     }
 }
