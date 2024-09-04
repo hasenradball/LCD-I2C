@@ -16,7 +16,7 @@ void setup() {
     // If you are using more I2C devices using the Wire library use lcd.begin(false)
     // this stop the library(LCD-I2C) from calling Wire.begin()
     Wire.begin();
-    lcd.begin(Wire);
+    lcd.begin(&Wire);
     lcd.display();
     lcd.backlight();
 }

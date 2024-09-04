@@ -24,7 +24,7 @@ LCD_I2C lcd(0x27, 16, 2);
 
 void setup() {
   Wire.begin();
-  lcd.begin(Wire);
+  lcd.begin(&Wire);
   lcd.display();
   lcd.backlight();
 }

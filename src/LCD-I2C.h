@@ -46,7 +46,7 @@ class LCD_I2C : public Print {
         LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2)
         : _address(address), _columnMax(--columns), _rowMax(--rows) {}
 
-        void begin(TwoWire &wire);
+        void begin(TwoWire *wire);
         void backlight();
         void backlightOff();
 
@@ -72,7 +72,7 @@ class LCD_I2C : public Print {
 
 
     private:
-      TwoWire &_wire;
+      TwoWire *_wire;
       uint8_t _address;
       uint8_t _columnMax;
       uint8_t _rowMax;

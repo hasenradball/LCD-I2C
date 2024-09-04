@@ -6,7 +6,7 @@
  * 
  * @param beginWire if true start I²C wire
  */
-void LCD_I2C::begin(Twowire &wire) {
+void LCD_I2C::begin(Twowire *wire) {
   _wire = wire;
 
   // Clear i2c adapter
@@ -369,9 +369,9 @@ void LCD_I2C::writeCharCode(uint8_t code) {
  * @param output data to write
  */
 void LCD_I2C::I2C_Write(uint8_t output) {
-    _wire.beginTransmission(_address);
-    _wire.write(output);
-    _wire.endTransmission();
+    _wire->beginTransmission(_address);
+    _wire->write(output);
+    _wire->endTransmission();
 }
 
 /**

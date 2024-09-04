@@ -64,7 +64,7 @@ uint8_t snow[8] =
 
 void setup() {
   Wire.begin();
-  lcd.begin(Wire);
+  lcd.begin(&Wire);
   lcd.display();
   lcd.backlight();
 
