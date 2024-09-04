@@ -8,6 +8,7 @@
 */
 
 #include <LCD-I2C.h>
+#include <Wire.h>
 
 // Default address of most PCF8574 modules, change according
 
@@ -62,20 +63,20 @@ uint8_t snow[8] =
 };
 
 void setup() {
-    lcd.begin();
-    lcd.display();
-    lcd.backlight();
+  Wire.begin();
+  lcd.begin(Wire);
+  lcd.display();
+  lcd.backlight();
 
-    lcd.createChar(0, happy);
-    lcd.createChar(1, wow);
-    lcd.createChar(2, anchor);
-    lcd.createChar(3, snow);
+  lcd.createChar(0, happy);
+  lcd.createChar(1, wow);
+  lcd.createChar(2, anchor);
+  lcd.createChar(3, snow);
 
-
-    lcd.write(0);
-    lcd.write(1);
-    lcd.write(2);
-    lcd.write(3);
+  lcd.write(0);
+  lcd.write(1);
+  lcd.write(2);
+  lcd.write(3);
 }
 
 void loop() {
