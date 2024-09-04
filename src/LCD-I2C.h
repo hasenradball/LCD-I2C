@@ -2,7 +2,7 @@
 #define _LCD_I2C_H_
 
 #include "Arduino.h"
-#include <LCD_Constants.h>
+#include "Wire.h"
 
 /*
    This struct helps us constructing the I2C output based on data and control outputs.
@@ -46,7 +46,7 @@ class LCD_I2C : public Print {
         LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2)
         : _address(address), _columnMax(--columns), _rowMax(--rows) {}
 
-        void begin(bool beginWire = true);
+        void begin(TwoWire &wire);
         void backlight();
         void backlightOff();
 
@@ -72,16 +72,17 @@ class LCD_I2C : public Print {
 
 
     private:
-        uint8_t _address;
-        uint8_t _columnMax;
-        uint8_t _rowMax;
-        OutputState _output;
-        uint8_t _displayState = 0x00;
-        uint8_t _entryState = 0x00;
+      TwoWire &_wire;
+      uint8_t _address;
+      uint8_t _columnMax;
+      uint8_t _rowMax;
+      OutputState _output;
+      uint8_t _displayState = 0x00;
+      uint8_t _entryState = 0x00;
 
-        void InitializeLCD();
-        void I2C_Write(uint8_t output);
-        void LCD_Write(uint8_t output, bool initialization = false);
+      void InitializeLCD();
+      void I2C_Write(uint8_t output);
+      void LCD_Write(uint8_t output, bool initialization = false);
 };
 
 #endif
