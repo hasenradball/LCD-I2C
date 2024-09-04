@@ -6,7 +6,7 @@
  * 
  * @param beginWire if true start I²C wire
  */
-void LCD_I2C::begin(Twowire *wire) {
+void LCD_I2C::begin(TwoWire *wire) {
   _wire = wire;
 
   // Clear i2c adapter

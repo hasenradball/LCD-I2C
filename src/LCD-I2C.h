@@ -72,7 +72,7 @@ class LCD_I2C : public Print {
 
 
     private:
-      TwoWire *_wire;
+      TwoWire *_wire{nullptr};
       uint8_t _address;
       uint8_t _columnMax;
       uint8_t _rowMax;
