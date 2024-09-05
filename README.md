@@ -51,6 +51,9 @@ only a current source to VCC is active.
 A  detailed description of the PCF8574 you will find in the [pcf8574.pdf](./docs/pcf8574.pdf).
 
 ## Library Usage
+Possibly make a weather station.
+
+![Weather](./docs/LCD_Temp_Hum.JPG)
 
 # License
 This library is licensed under MIT Licence.
