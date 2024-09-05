@@ -1,20 +1,19 @@
 #include "LCD-I2C.h"
-#include "Wire.h"
+#include <LCD_Constants.h>
 
 /**
  * @brief function begin 
  * 
  * @param beginWire if true start I²C wire
  */
-void LCD_I2C::begin(bool beginWire) {
-    if (beginWire)
-        Wire.begin();
-    
-    // Clear i2c adapter
-    I2C_Write(0b00000000);
-    // Wait more than 40 ms after powerOn
-    delay(50);
-    InitializeLCD();
+void LCD_I2C::begin(TwoWire *wire) {
+  _wire = wire;
+
+  // Clear i2c adapter
+  I2C_Write(0b00000000);
+  // Wait more than 40 ms after powerOn
+  delay(50);
+  InitializeLCD();
 }
 
 /**
@@ -370,9 +369,9 @@ void LCD_I2C::writeCharCode(uint8_t code) {
  * @param output data to write
  */
 void LCD_I2C::I2C_Write(uint8_t output) {
-    Wire.beginTransmission(_address);
-    Wire.write(output);
-    Wire.endTransmission();
+    _wire->beginTransmission(_address);
+    _wire->write(output);
+    _wire->endTransmission();
 }
 
 /**
